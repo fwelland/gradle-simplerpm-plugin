@@ -33,7 +33,7 @@ bintray {
 
     filesSpec { 
         from 'build/libs'
-        into "org/fhw/gradle-wildfly-plugin/$version"
+        into "org/fhw/gradle-simplerpm-plugin/$version"
         include '*.jar'
     }
     
@@ -41,13 +41,11 @@ bintray {
     publish = true //If version should be auto published after an upload
     pkg {
         repo = 'FredsStuff'
-        name = 'gradle-wildfly-plugin'
-        desc = 'simple gradle plugin for basic jboss manipulation on a workstation!'
-        websiteUrl = 'http://stupidfredtricks.blogspot.com/2014/08/a-simple-gradle-plugin-for-wildfly-and.html'
-        vcsUrl = 'https://github.com/fwelland/gradle-wildfly-plugin.git'
+        name = 'gradle-simplerpm-plugin'
+        desc = 'simple gradle plugin for using rpmbuild to make an RPM -- this is WIP'
+        vcsUrl = 'https://github.com/fwelland/gradle-simplerpm-plugin.git'
         licenses = ['Apache-2.0']
-        labels = ['gradle', 'wildfly', 'java', 'jboss']        
-                 
+        labels = ['gradle', 'rpm']                         
     }
 }
 
