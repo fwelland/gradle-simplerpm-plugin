@@ -13,7 +13,7 @@ class MakeRPMTask extends BaseTask {
     def makerpm() {
 
         logger.info('make rpm here')
-        def base = File('build/tmp')
+        def base = File('${project.buildDir}/tmp')
         base.mkdirs()
         new File(base,'BUILD').mkdir()
         new File(base,'BUILDROOT').mkdir()
@@ -25,32 +25,17 @@ class MakeRPMTask extends BaseTask {
         targsepecdir.mkdir()                        
         Path src = Paths.get(getArtifactPath())
         Files.copy(src,targsrcdir)
-        src = Paths.get()
-        
+        src = Paths.get(getSpecFilePath())
+        Files.copy(src,targspecdir)
+
+        execute(    'rpmbuild',
+                    '--define', 
+                    "_topdir ${project.buildDir}/tmp",
+                    '--define',
+                    "VERSION ${project.version}",
+                    '--define',
+                    '_tmppath  %{_topdir}/tmp',
+                    '-bb',
+                    "SPECS/${src.fileName}")
     }
 }
-
-
-
-//task clean {
-//  delete 'BUILD'
-//  delete 'BUILDROOT'
-//  delete 'RPMS'
-//  delete 'SRPMS'
-//  delete 'tmp'
-//  delete 'SOURCES'
-//}
-//
-//task copySources(type: Copy, dependsOn: ':main:ear:ear') {
-//    from tasks.getByPath(':main:ear:ear').archivePath
-//    into "SOURCES"
-//}
-//
-//task build(type: Exec, dependsOn: copySources) {//  commandLine '/usr/bin/rpmbuild',
-//    '--define', "_topdir ${project.projectDir}",
-//    '--define', "VERSION ${project.version}",
-//    '--define', '_tmppath  %{_topdir}/tmp',
-//    '-bb', 'SPECS/rpm.spec'
-//}
-
-

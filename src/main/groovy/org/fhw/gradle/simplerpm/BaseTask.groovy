@@ -13,4 +13,28 @@ class BaseTask extends DefaultTask {
         return project.simplerpm.artifact_to_include
     }
 
+    def getSpecFilePath()
+    {
+        return project.simplerpm.spec_file
+    }
+    
+    def execute(String ... commands){
+        def cmds = []
+
+        for(String s : commands)
+        {           
+            cmds.add(cmd)
+        }
+        ProcessBuilder builder = new ProcessBuilder( cmds )                                               
+        builder.directory(new File(getBinDir()))                
+        builder.redirectErrorStream(true)
+        Process process = builder.start()                
+        InputStream stdout = process.getInputStream()
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stdout)) 
+        def line
+        while ((line = reader.readLine()) != null) 
+        {   }       
+        return( process.waitFor() == 0)                 
+    }    
+    
 }

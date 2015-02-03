@@ -32,6 +32,34 @@ class BaseTaskSpec extends Specification {
             
         then:  
             art == '/opt/yar'
-    }        
+    }     
+    
+    def "Test get spec file path"()
+    {
+        given: 
+            Project project = ProjectBuilder.builder().build()
+            project.apply plugin: 'simplerpm'
+            project.simplerpm.spec_file = '/opt/yar'
+            
+        when:
+            String  art = project.tasks.rpm.getSpecFilePath()
+            
+        then:  
+            art == '/opt/yar'
+    }  
+    
+    def "Test get spec file path default case "()
+    {
+        given: 
+            Project project = ProjectBuilder.builder().build()
+            project.apply plugin: 'simplerpm'
+            
+        when:
+            String  art = project.tasks.rpm.getSpecFilePath()
+            
+        then:  
+            ! art
+    }    
+    
 }
 
