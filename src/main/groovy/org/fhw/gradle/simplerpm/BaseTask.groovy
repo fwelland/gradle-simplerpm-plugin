@@ -23,17 +23,18 @@ class BaseTask extends DefaultTask {
 
         for(String s : commands)
         {           
-            cmds.add(cmd)
+            cmds.add(s)
         }
         ProcessBuilder builder = new ProcessBuilder( cmds )                                               
-        builder.directory(new File(getBinDir()))                
         builder.redirectErrorStream(true)
         Process process = builder.start()                
         InputStream stdout = process.getInputStream()
         BufferedReader reader = new BufferedReader(new InputStreamReader(stdout)) 
         def line
         while ((line = reader.readLine()) != null) 
-        {   }       
+        {
+            println("out:   " + line)
+        }       
         return( process.waitFor() == 0)                 
     }    
     
