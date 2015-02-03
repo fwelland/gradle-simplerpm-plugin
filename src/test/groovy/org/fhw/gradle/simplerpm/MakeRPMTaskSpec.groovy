@@ -2,10 +2,12 @@ package org.fhw.gradle.simplerpm
 
 import spock.lang.Specification
 import org.gradle.testfixtures.ProjectBuilder
+import spock.lang.Ignore
 import org.gradle.api.Project
 
 class MakeRPMTaskSpec extends Specification {
     
+    @Ignore
     def "Test basic case"()
     {
         given: 
