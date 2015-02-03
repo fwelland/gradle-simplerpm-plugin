@@ -22,4 +22,3 @@ class MakeRPMTaskSpec extends Specification {
             1 == 1 
     }    
 }
-

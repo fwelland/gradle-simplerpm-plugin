@@ -42,13 +42,3 @@ class MakeRPMTask extends BaseTask {
                     "${targ_spec_dir}/${src.fileName}")
     }
 }
-
-
-
-//task build(type: Exec, dependsOn: copySources) {
-//  commandLine '/usr/bin/rpmbuild',
-//    '--define', "_topdir ${project.projectDir}",
-//    '--define', "VERSION ${project.version}",
-//    '--define', '_tmppath  %{_topdir}/tmp',
-//    '-bb', 'SPECS/rpm.spec'
-//}
