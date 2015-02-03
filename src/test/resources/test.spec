@@ -1,29 +1,39 @@
 Name:           test
-Version:        2.8
-Release:        1%{?dist}
+Version:        %{?VERSION}
+Release:        1
 Summary:        The "Test" thing for gradle/rpm plugin
 License:        GPL
 Source0:        test.ear      
-Requires(post): info
-Requires(preun): info
+Group:          Test Group
+BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-buildroot
+AutoReqProv:    no
+
 
 %description 
-The "Hello World" program, done with all bells and whistles of a proper FOSS 
-project, including configuration, build, internationalization, help files, etc.
+This is a dummy rpm used to test simplerpm plugin for gradle
+
+#Disable jar repacking and debug_package creation
+%define __os_install_post %{nil}
+%define debug_package %{nil}
 
 %prep
-%autosetup
+install -m 644 %SOURCE0 .
+
 
 %build
-%configure
 
 %install
-%make_install
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/tmp/test
+cp -a test.ear %{buildroot}/tmp/test
 
-%post
-
-
-%preun
 %files
-%changelog
-- Initial version of the package
+%defattr(-,root,root)
+/tmp/test
+
+%pre
+%post
+%preun
+%postrun 
+
