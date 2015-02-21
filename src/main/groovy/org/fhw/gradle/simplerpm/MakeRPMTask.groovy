@@ -2,7 +2,7 @@ package org.fhw.gradle.simplerpm
 
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Input
-import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.TaskExecutionException
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.Files  
@@ -31,14 +31,17 @@ class MakeRPMTask extends BaseTask {
         src = Paths.get(getSpecFilePath())
         Files.copy(src,targ_spec_dir.resolve(src.getFileName()),StandardCopyOption.REPLACE_EXISTING)
         
-        execute(    'rpmbuild',
-                    '--define', 
-                    "_topdir ${project.buildDir}/tmp",
-                    '--define',
-                    "VERSION ${project.version}",
-                    '--define',
-                    "_tmppath  %{_topdir}/tmp",
-                    '-bb',
-                    "${targ_spec_dir}/${src.fileName}")
+        if(!execute(    'rpmbuild',
+                        '--define', 
+                        "_topdir ${project.buildDir}/tmp",
+                        '--define',
+                        "VERSION ${project.version}",
+                        '--define',
+                        "_tmppath  %{_topdir}/tmp",
+                        '-bb',
+                        "${targ_spec_dir}/${src.fileName}")) {
+            
+            throw new TaskExecutionException(this,new Exception('rpmbuild failed'))
+        }
     }
 }

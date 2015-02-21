@@ -33,7 +33,7 @@ class BaseTask extends DefaultTask {
         def line
         while ((line = reader.readLine()) != null) 
         {
-            println("out:   " + line)
+            logger.info  line
         }       
         return( process.waitFor() == 0)                 
     }    
