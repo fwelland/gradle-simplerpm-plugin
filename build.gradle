@@ -6,12 +6,22 @@ version = '0.1'
 def uzer = hasProperty('btIdentity') ? btIdentity : System.getenv('btIdentity')
 def creds = hasProperty('btIDCreds') ? btIDCreds : System.getenv('btIDCreds')
 
+if( hasProperty('buildId') ){  //can come from gradle -PbuildId=....
+    version = buildId
+}
+else{
+    def tbid = System.getenv('TRAVIS_BUILD_NUMBER')
+    if(tbid){
+        version = tbid
+    }
+}
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
     }
 }
 
