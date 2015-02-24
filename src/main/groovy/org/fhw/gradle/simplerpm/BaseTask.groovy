@@ -37,5 +37,11 @@ class BaseTask extends DefaultTask {
         }       
         return( process.waitFor() == 0)                 
     }    
-    
+
+    def getRpmbbuildMacroArgs() {
+        def rpm_macro_map = project.simplerpm.rpm_macro_map
+        if (!rpm_macro_map) { return [] }
+        rpm_macro_map.collectMany { ['--define', "${it.key} ${it.value}"] }
+    }
+
 }
