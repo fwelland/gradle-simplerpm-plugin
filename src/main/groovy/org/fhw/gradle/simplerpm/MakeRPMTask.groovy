@@ -31,16 +31,19 @@ class MakeRPMTask extends BaseTask {
         src = Paths.get(getSpecFilePath())
         Files.copy(src,targ_spec_dir.resolve(src.getFileName()),StandardCopyOption.REPLACE_EXISTING)
         
-        if(!execute(    'rpmbuild',
-                        '--define', 
-                        "_topdir ${project.buildDir}/tmp",
-                        '--define',
-                        "VERSION ${project.version}",
-                        '--define',
-                        "_tmppath  %{_topdir}/tmp",
-                        '-bb',
-                        "${targ_spec_dir}/${src.fileName}")) {
-            
+        def cmd = [ 'rpmbuild',
+            '--define',
+            "_topdir ${project.buildDir}/tmp",
+            '--define',
+            "VERSION ${project.version}",
+            '--define',
+            "_tmppath  %{_topdir}/tmp",
+            getRpmbbuildMacroArgs(),
+            '-bb',
+            "${targ_spec_dir}/${src.fileName}"
+        ].flatten()
+
+        if(!execute(*cmd)) {
             throw new TaskExecutionException(this,new Exception('rpmbuild failed'))
         }
     }

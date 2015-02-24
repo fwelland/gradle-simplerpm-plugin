@@ -60,6 +60,34 @@ class BaseTaskSpec extends Specification {
         then:  
             ! art
     }    
-    
+
+    def "Test get rpm build macro args"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            project.apply plugin: 'simplerpm'
+            project.simplerpm.rpm_macro_map = [ 'foo': 'bar', 'moo': 'cow']
+
+        when:
+            List args = project.tasks.rpm.getRpmbbuildMacroArgs()
+
+        then:
+        args == [
+          '--define', 'foo bar',
+          '--define', 'moo cow'
+        ]
+    }
+
+    def "Test get rpm build macro args default case"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            project.apply plugin: 'simplerpm'
+
+        when:
+            List args = project.tasks.rpm.getRpmbbuildMacroArgs()
+
+        then:
+        args == []
+    }
+
 }
 
