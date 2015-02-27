@@ -26,10 +26,12 @@ class MakeRPMTask extends BaseTask {
         
         Path targ_src_dir = Paths.get(base.absolutePath,'SOURCES') 
         Path targ_spec_dir = Paths.get(base.absolutePath,'SPECS') 
-        Path src = Paths.get(getArtifactPath())     
-        Files.copy(src,targ_src_dir.resolve(src.getFileName()),StandardCopyOption.REPLACE_EXISTING)
-        src = Paths.get(getSpecFilePath())
-        Files.copy(src,targ_spec_dir.resolve(src.getFileName()),StandardCopyOption.REPLACE_EXISTING)
+        if (getArtifactPath()) {
+            Path artifactSrc = Paths.get(getArtifactPath())     
+            Files.copy(atifactSrc,targ_src_dir.resolve(artifactSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
+        }
+        Path specSrc = Paths.get(getSpecFilePath())
+        Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
         
         def cmd = [ 'rpmbuild',
             '--define',
@@ -40,7 +42,7 @@ class MakeRPMTask extends BaseTask {
             "_tmppath  %{_topdir}/tmp",
             getRpmbbuildMacroArgs(),
             '-bb',
-            "${targ_spec_dir}/${src.fileName}"
+            "${targ_spec_dir}/${specSrc.fileName}"
         ].flatten()
 
         if(!execute(*cmd)) {
