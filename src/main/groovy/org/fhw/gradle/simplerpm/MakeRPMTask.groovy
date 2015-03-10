@@ -12,7 +12,10 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 
 class MakeRPMTask extends BaseTask {
-    	        
+    
+    def String rpmName = "${project.name}-${project.version}.rpm"
+       
+    
     @TaskAction
     def makerpm() {
         File base = new File("${project.buildDir}/tmp")
@@ -31,9 +34,10 @@ class MakeRPMTask extends BaseTask {
             Files.copy(artifactSrc,targ_src_dir.resolve(artifactSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
         }
         Path specSrc = Paths.get(getSpecFilePath())
-        Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
-        
+        Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)      
         def cmd = [ 'rpmbuild',
+            '--define', 
+            "_build_name_fmt ${rpmName}",
             '--define',
             "_topdir ${project.buildDir}/tmp",
             '--define',
@@ -48,5 +52,5 @@ class MakeRPMTask extends BaseTask {
         if(!execute(*cmd)) {
             throw new TaskExecutionException(this,new Exception('rpmbuild failed'))
         }
-    }
+    }           
 }
