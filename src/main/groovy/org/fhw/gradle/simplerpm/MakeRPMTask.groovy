@@ -28,7 +28,7 @@ class MakeRPMTask extends BaseTask {
         Path targ_spec_dir = Paths.get(base.absolutePath,'SPECS') 
         if (getArtifactPath()) {
             Path artifactSrc = Paths.get(getArtifactPath())     
-            Files.copy(atifactSrc,targ_src_dir.resolve(artifactSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(artifactSrc,targ_src_dir.resolve(artifactSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
         }
         Path specSrc = Paths.get(getSpecFilePath())
         Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)
