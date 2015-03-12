@@ -7,6 +7,7 @@ import org.gradle.api.Project
 
 class MakeRPMTaskSpec extends Specification {
     
+    @Ignore
     def "Test basic case"()
     {
         given: 
