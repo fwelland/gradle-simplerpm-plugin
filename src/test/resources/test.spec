@@ -1,4 +1,4 @@
-Name:           test
+Name:           test2
 Version:        %{?VERSION}
 Release:        1
 Summary:        The "Test" thing for gradle/rpm plugin

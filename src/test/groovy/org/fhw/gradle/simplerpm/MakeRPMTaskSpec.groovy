@@ -7,7 +7,6 @@ import org.gradle.api.Project
 
 class MakeRPMTaskSpec extends Specification {
     
-    @Ignore
     def "Test basic case"()
     {
         given: 
@@ -30,8 +29,8 @@ class MakeRPMTaskSpec extends Specification {
     {
         given: 
             Project project = new ProjectBuilder().withName('test-rpm').build()
-            project.version = '3.9.4'
             project.apply plugin: 'simplerpm'                
+            project.version = '3.9.4'            
         when:
             String  art = project.tasks.rpm.rpmName
             
@@ -39,8 +38,7 @@ class MakeRPMTaskSpec extends Specification {
             "test-rpm-3.9.4.rpm" == art
     }        
     
-    def "test get rpm path override case"()
-    {
+    def "test get rpm path override case"() {
         given: 
             Project project = new ProjectBuilder().withName('test-rpm').build()
             project.version = '3.9.4'
@@ -51,5 +49,6 @@ class MakeRPMTaskSpec extends Specification {
             
         then:  
             "hector.rpm" == art
+            //"test-rpm-3.9.4.rpm" == art
     }            
 }

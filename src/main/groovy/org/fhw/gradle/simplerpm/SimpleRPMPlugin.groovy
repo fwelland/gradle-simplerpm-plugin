@@ -6,12 +6,11 @@ import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.MavenPlugin
 
 class SimpleRPMPlugin implements Plugin<Project> {
-        
+
     @Override
-    void apply(Project project) {        
-        //project.plugins.apply(BasePlugin)
+    void apply(Project project) {
         project.plugins.apply(MavenPlugin)
-        project.extensions.create("simplerpm", SimpleRPMPluginExtension)        
+        project.extensions.create("simplerpm", SimpleRPMPluginExtension)
         project.task('rpm', type: MakeRPMTask)
-    }    
+    }
 }

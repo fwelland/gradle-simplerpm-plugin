@@ -13,11 +13,11 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 class MakeRPMTask extends BaseTask {
     
-    def String rpmName = "${project.name}-${project.version}.rpm"
-       
+    def String rpmName = "${->project.name}-${->project.version}.rpm"         
     
+                       
     @TaskAction
-    def makerpm() {
+    def makerpm() {                    
         File base = new File("${project.buildDir}/tmp")
         base.mkdirs()
         new File(base,'BUILD').mkdir()
@@ -26,7 +26,8 @@ class MakeRPMTask extends BaseTask {
         new File(base,'SRPMS').mkdir()
         new File(base,'SOURCES').mkdir()        
         new File(base,'SPECS').mkdir()
-        
+                
+
         Path targ_src_dir = Paths.get(base.absolutePath,'SOURCES') 
         Path targ_spec_dir = Paths.get(base.absolutePath,'SPECS') 
         if (getArtifactPath()) {
@@ -35,9 +36,10 @@ class MakeRPMTask extends BaseTask {
         }
         Path specSrc = Paths.get(getSpecFilePath())
         Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)      
+        
         def cmd = [ 'rpmbuild',
             '--define', 
-            "_build_name_fmt ${rpmName}",
+            "_build_name_fmt ${->rpmName}",
             '--define',
             "_topdir ${project.buildDir}/tmp",
             '--define',

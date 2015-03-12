@@ -8,6 +8,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 class BaseTask extends DefaultTask {
 
+    
+    def getRpmVersion()
+    {
+        return project.simplerpm.rpm_version
+    }    
+    
     def getArtifactPath()
     {
         return project.simplerpm.artifact_to_include
