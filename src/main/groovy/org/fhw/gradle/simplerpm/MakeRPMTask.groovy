@@ -13,8 +13,15 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 class MakeRPMTask extends BaseTask {
     
-    @Lazy(soft = true) String rpmName = "${project.name}-${project.version}.rpm"
+    String rpmName
 
+    String getRpmName() {
+        this.rpmName ? this.rpmName : "${project.name}-${project.version}.rpm"
+    }
+
+    void setRpmName(String rpmName) {
+        this.rpmName = rpmName
+    }
                        
     @TaskAction
     def makerpm() {                    
