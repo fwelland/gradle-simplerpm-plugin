@@ -13,8 +13,15 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 class MakeRPMTask extends BaseTask {
     
-    def String rpmName = "${->project.name}-${->project.version}.rpm"         
-    
+    String rpmName
+
+    String getRpmName() {
+        this.rpmName ? this.rpmName : "${project.name}-${project.version}.rpm"
+    }
+
+    void setRpmName(String rpmName) {
+        this.rpmName = rpmName
+    }
                        
     @TaskAction
     def makerpm() {                    
@@ -39,7 +46,7 @@ class MakeRPMTask extends BaseTask {
         
         def cmd = [ 'rpmbuild',
             '--define', 
-            "_build_name_fmt ${->rpmName}",
+            "_build_name_fmt ${rpmName}",
             '--define',
             "_topdir ${project.buildDir}/tmp",
             '--define',
