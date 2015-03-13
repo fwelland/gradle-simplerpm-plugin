@@ -13,10 +13,10 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 class MakeRPMTask extends BaseTask {
     
-    String rpmName
+    def String rpmName
 
     String getRpmName() {
-        this.rpmName ? this.rpmName : "${project.name}-${project.version}.rpm"
+        return(this.rpmName ? this.rpmName : "${project.name}-${project.version}.rpm")
     }
 
     void setRpmName(String rpmName) {
@@ -43,6 +43,10 @@ class MakeRPMTask extends BaseTask {
         }
         Path specSrc = Paths.get(getSpecFilePath())
         Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)      
+        
+        
+        println "what is rpmName  [${rpmName}]"
+        
         
         def cmd = [ 'rpmbuild',
             '--define', 
