@@ -44,13 +44,9 @@ class MakeRPMTask extends BaseTask {
         Path specSrc = Paths.get(getSpecFilePath())
         Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)      
         
-        
-        println "what is rpmName  [${rpmName}]"
-        
-        
         def cmd = [ 'rpmbuild',
             '--define', 
-            "_build_name_fmt ${rpmName}",
+            "_build_name_fmt ${getRpmName()}",
             '--define',
             "_topdir ${project.buildDir}/tmp",
             '--define',
