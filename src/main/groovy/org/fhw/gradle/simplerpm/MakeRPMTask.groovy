@@ -12,17 +12,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 
 class MakeRPMTask extends BaseTask {
-    
-    def String rpmName
-
-    String getRpmName() {
-        return(this.rpmName ? this.rpmName : "${project.name}-${project.version}.rpm")
-    }
-
-    void setRpmName(String rpmName) {
-        this.rpmName = rpmName
-    }
-                       
+                      
     @TaskAction
     def makerpm() {                    
         File base = new File("${project.buildDir}/tmp")
@@ -45,8 +35,6 @@ class MakeRPMTask extends BaseTask {
         Files.copy(specSrc,targ_spec_dir.resolve(specSrc.getFileName()),StandardCopyOption.REPLACE_EXISTING)      
         
         def cmd = [ 'rpmbuild',
-            '--define', 
-            "_build_name_fmt ${getRpmName()}",
             '--define',
             "_topdir ${project.buildDir}/tmp",
             '--define',
@@ -62,4 +50,16 @@ class MakeRPMTask extends BaseTask {
             throw new TaskExecutionException(this,new Exception('rpmbuild failed'))
         }
     }           
+
+    def String getRpmFilePath()
+    {
+        def String bn = getRpmBaseName()
+        def String ver = getRpmVersion()
+        def String rel = getRpmRelease() 
+
+        def macroDef = exec("rpm", "--eval", "%{_build_name_fmt}")
+        def out =  exec("rpm", "--queryformat", macroDef, "--define", "archive_base_name ${bn}","--define", "VERSION ${ver}","--specfile", "${getSpecFilePath()}")
+        println out 
+        return( out )        
+    }    
 }

@@ -26,30 +26,30 @@ class MakeRPMTaskSpec extends Specification {
     }    
     
     
-    def "test get rpm path default case"()
-    {
-        given: 
-            Project project = new ProjectBuilder().withName('test-rpm').build()
-            project.apply plugin: 'simplerpm'                
-            project.version = '3.9.4'            
-        when:
-            String  art = project.tasks.rpm.rpmName
-            
-        then:  
-            "test-rpm-3.9.4.rpm" == art
-    }        
-    
-    def "test get rpm path override case"() {
-        given: 
-            Project project = new ProjectBuilder().withName('test-rpm').build()
-            project.version = '3.9.4'
-            project.apply plugin: 'simplerpm'                
-        when:
-            project.tasks.rpm.rpmName = "hector.rpm"
-            String  art = project.tasks.rpm.rpmName
-            
-        then:  
-            "hector.rpm" == art
-            //"test-rpm-3.9.4.rpm" == art
-    }            
+//    def "test get rpm path default case"()
+//    {
+//        given: 
+//            Project project = new ProjectBuilder().withName('test-rpm').build()
+//            project.apply plugin: 'simplerpm'                
+//            project.version = '3.9.4'            
+//        when:
+//            String  art = project.tasks.rpm.rpmName
+//            
+//        then:  
+//            "test-rpm-3.9.4.rpm" == art
+//    }        
+//    
+//    def "test get rpm path override case"() {
+//        given: 
+//            Project project = new ProjectBuilder().withName('test-rpm').build()
+//            project.version = '3.9.4'
+//            project.apply plugin: 'simplerpm'                
+//        when:
+//            project.tasks.rpm.rpmName = "hector.rpm"
+//            String  art = project.tasks.rpm.rpmName
+//            
+//        then:  
+//            "hector.rpm" == art
+//            //"test-rpm-3.9.4.rpm" == art
+//    }            
 }
