@@ -9,7 +9,6 @@ class SimpleRPMPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        project.plugins.apply(MavenPlugin)
         project.extensions.create("simplerpm", SimpleRPMPluginExtension)
         project.task('rpm', type: MakeRPMTask)
     }
