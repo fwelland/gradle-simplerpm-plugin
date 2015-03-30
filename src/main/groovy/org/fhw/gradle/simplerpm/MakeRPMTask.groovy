@@ -57,7 +57,7 @@ class MakeRPMTask extends BaseTask {
         def String ver = getRpmVersion()
         def String rel = getRpmRelease() 
         def macroDef = exec("rpm", "--eval", "%{_build_name_fmt}")
-        def out =  exec("rpm", "--queryformat", macroDef, "--define", "archive_base_name ${bn}","--define", "VERSION ${ver}","--specfile", "${getSpecFilePath()}")
+        def out =  exec("rpm", "-q", "--queryformat", macroDef, "--define", "archive_base_name ${bn}","--define", "VERSION ${ver}","--specfile", "${getSpecFilePath()}")
         return( out )        
     }    
 }
